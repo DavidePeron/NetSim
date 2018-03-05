@@ -10,7 +10,7 @@ ci_low = zeros(1,num_exp);
 ci_high = zeros(1,num_exp);
 count = 0;
 
-for i=1:1000
+for i=1:num_exp
     % Generate n=48 iid U(0,1) r.v.’s
     rv(i,:) = rand(1,n);
 
