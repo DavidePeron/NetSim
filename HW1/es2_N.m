@@ -12,7 +12,7 @@ count = 0;
 
 for i=1:num_exp
     % Generate n=48 iid U(0,1) r.v.’s
-    rv(i,:) = rand(1,n);
+    rv(i,:) = normrnd(0,1,[1 n]);
 
     % Find sample mean, sample std dev and 95%-confidence interval for the mean
     mu(i) = mean(rv(i,:));
@@ -30,11 +30,11 @@ for i=1:num_exp
     % end
     % std_dev = sum_dev/n;
     deviation = arrayfun(@(x) (x-mu(i))^2, rv(i,:));
-    std_dev = sum(deviation)/n;
+    std_dev = sum(deviation)/(n-1);
 
     ci_low(i) = mu(i) - 1.96*sqrt(std_dev/n);
     ci_high(i) = mu(i) + 1.96*sqrt(std_dev/n);
-    if(ci_low(i) > 0.5 || ci_high(i) < 0.5)
+    if(ci_low(i) > 0 || ci_high(i) < 0)
         count = count + 1;
     end
 end
@@ -49,7 +49,7 @@ mu = mu(sort_index);
 t = 1:1000;
 figure('Name', 'Experiment2 Results');
 plot(t,mu, '-b');
-title('Confidence Intervals using Uniform Distribution U(0,1)');
+title('Confidence Intervals using Normal Distribution N(0,1)');
 hold on;
 plot(t,ci_high, '-.r');
 hold on;
