@@ -3,29 +3,44 @@ clear all;
 
 load('sgbdnew.dat');
 load('sgbdold.dat');
+sorted_old = sort(sgbdold);
+sorted_new = sort(sgbdnew);
 
 %Plot of Figure 2.1
 t = 1:100;
 figure('Name','Figure 2.1');
-subplot(1,2,1);
+subplot(2,2,1);
 plot(t,sgbdold,'+b');
 ylim([0 200]);
 yticks(linspace(0,200,5));
 title('Old Values');
 
-subplot(1,2,2);
+subplot(2,2,2);
 plot(t,sgbdnew,'or');
 ylim([0 200]);
 yticks(linspace(0,200,5));
 title('New Values');
+
+subplot(2,2,3);
+nbins = 10;
+histogram(sgbdold,nbins);
+xlim([0 200]);
+xticks(linspace(0,200,5));
+grid on;
+
+subplot(2,2,4);
+histogram(sgbdnew,nbins);
+xlim([0 200]);
+xticks(linspace(0,200,5));
+grid on;
 
 %Plot of Figure 2.2
 t_2 = 1:200;
 counter_old = zeros(1,200);
 counter_new = zeros(1,200);
 for i=1:200
-    counter_old(i) = sum(sgbdold(:) <= i);
-    counter_new(i) = sum(sgbdnew(:) <= i);
+	counter_old(i) = sum(sgbdold(:) <= i);
+	counter_new(i) = sum(sgbdnew(:) <= i);
 end
 
 figure('Name','Figure 2.2');
@@ -39,7 +54,6 @@ legend('old', 'new');
 %Plot of Figure 2.3
 n=length(sgbdold);
 %Old values
-sorted_old = sort(sgbdold);
 sample_median_old = (sorted_old(n/2) + sorted_old(n/2 + 1))/2;
 % for the median p=0.5
 p=0.5;
@@ -50,7 +64,6 @@ ci_low_old = sorted_old(j);
 ci_high_old = sorted_old(k);
 
 %New Values
-sorted_new = sort(sgbdnew);
 sample_median_new = (sorted_new(n/2) + sorted_new(n/2 + 1))/2;
 % for the median p=0.5
 p=0.5;
@@ -106,3 +119,5 @@ yticks(linspace(0,200,5));
 xlim([0 3]);
 xticks([1 2]);
 xticklabels({'Old', 'New'});
+
+%% Figure 2.7
