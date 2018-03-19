@@ -1,7 +1,7 @@
 clear all;
 close all;
 
-n=100;
+n=1000;
 num_exp = 1000;
 
 rv = zeros(num_exp,n);

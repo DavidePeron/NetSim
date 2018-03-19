@@ -18,24 +18,22 @@ zeta = zeros(1,num_samples);
 xi = zeros(1,num_samples);
 
 for i=1:num_samples
-	zeta(i) = chi2inv((1-gamma)/2,n*i-1);
-	xi(i) = chi2inv((1+gamma)/2,n*i-1);
+    zeta(i) = chi2inv((1-gamma)/2,n*i-1);
+    xi(i) = chi2inv((1+gamma)/2,n*i-1);
 end
 
-% disp(zeta);
-
 for i=1:num_samples
-	for j= 1:num_exp
-		% Generate n=48 iid U(0,1) r.v.’s
-		rv = rand(1,n*i);
+    for j= 1:num_exp
+        % Generate n*i iid U(0,1) r.v.’s
+        rv = rand(1,n*i);
 
-		% Find sample mean, sample std dev and 95%-confidence interval for the variance
-		mu(j,i) = mean(rv);
-		deviation = arrayfun(@(x) (x-mu(j,i))^2, rv);
-		std_dev(j,i) = sum(deviation)/(n*i-1);
-		ci_low(j,i) = sqrt(std_dev(j,i)*zeta(i)/(n*i-1));
-		ci_high(j,i) = sqrt(std_dev(j,i)*xi(i)/(n*i-1));
-	end
+        % Find sample mean, sample std dev and 95%-confidence interval for the variance
+        mu(j,i) = mean(rv);
+        deviation = arrayfun(@(x) (x-mu(j,i))^2, rv);
+        std_dev(j,i) = sum(deviation)/(n*i-1);
+        ci_low(j,i) = sqrt(std_dev(j,i)*zeta(i)/(n*i-1));
+        ci_high(j,i) = sqrt(std_dev(j,i)*xi(i)/(n*i-1));
+    end
 end
 
 mean_mu = mean(mu,1);
@@ -68,7 +66,7 @@ plot(t,mean_ci_high, '-.r');
 grid on;
 title('Confidence Intervals for the Variance using Normal Distribution N(0,1)');
 hold on;
-plot(t,mean_ci_low, '-.m');
+plot(t,ci_low, '-.m');
 xlabel('# of random variables');
 ylabel('Confidence Intervals');
 X = [t, fliplr(t)];
