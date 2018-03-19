@@ -1,60 +1,78 @@
 clear all;
 close all;
 
-n=100;
+% Initial number of random variables
+n=10;
+% Max number of rvs is n*num_samples
+num_samples = 100;
+% #experiments for each sample
 num_exp = 100;
+% Confidence level
+gamma = 0.95;
 
-mu = zeros(1,num_exp);
-std_dev = zeros(1,num_exp);
-ci_low = zeros(1,num_exp);
-ci_high = zeros(1,num_exp);
-count = 0;
+mu = zeros(num_exp,num_samples);
+std_dev = zeros(num_exp,num_samples);
+ci_low = zeros(num_exp,num_samples);
+ci_high = zeros(num_exp,num_samples);
+zeta = zeros(1,num_samples);
+xi = zeros(1,num_samples);
 
-for i=1:num_exp
-    % Generate n=48 iid U(0,1) r.v.’s
-    rv = normrnd(0,1,[1 n]);
-
-    % Find sample mean, sample std dev and 95%-confidence interval for the mean
-    mu(i) = mean(rv);
-
-    % % Just to check, I calculated by-hand the sample mean, and it returns equal
-    % sum_rv = sum(rv);
-    % mu_sample = sum_rv/n;
-
-    % sigma_sq = std(rv);
-
-    % % Just to check, I calculated by-hand the sample standard deviation, and it returns equal
-    % sum_dev = 0;
-    % for i=1:n
-    %     sum_dev = sum_dev + (rv(i) - mu)^2;
-    % end
-    % std_dev = sum_dev/n;
-    deviation = arrayfun(@(x) (x-mu(i))^2, rv);
-    std_dev(i) = sum(deviation)/(n-1);
-
-    ci_low(i) = sqrt(std_dev(i)*73.2204/(n-1));
-    ci_high(i) = sqrt(std_dev(i)*128.6604/(n-1));
-    n = n+100;
+for i=1:num_samples
+	zeta(i) = chi2inv((1-gamma)/2,n*i-1);
+	xi(i) = chi2inv((1+gamma)/2,n*i-1);
 end
 
+% disp(zeta);
+
+for i=1:num_samples
+	for j= 1:num_exp
+		% Generate n=48 iid U(0,1) r.v.’s
+		rv = normrnd(0,1,[1 n*i]);
+
+		% Find sample mean, sample std dev and 95%-confidence interval for the variance
+		mu(j,i) = mean(rv);
+		deviation = arrayfun(@(x) (x-mu(j,i))^2, rv);
+		std_dev(j,i) = sum(deviation)/(n*i-1);
+		ci_low(j,i) = sqrt(std_dev(j,i)*zeta(i)/(n*i-1));
+		ci_high(j,i) = sqrt(std_dev(j,i)*xi(i)/(n*i-1));
+	end
+end
+
+mean_mu = mean(mu,1);
+mean_std_dev = mean(std_dev,1);
+mean_ci_low = mean(ci_low,1);
+mean_ci_high = mean(ci_high,1);
+
 %Study the accuracy of the estimate with respect to the true value vs. n
-err_from_true = abs(mu);
+mean_err_from_true = abs(mean_mu);
+std_dev_err_from_true = abs(mean_std_dev - 1);
 
 %Plot the results
-t = 100:100:100 + num_exp*99;
-figure('Name', 'Experiment4');
+t = linspace(n, n*num_samples, num_samples);
+figure('Name', 'Experiment4 - Accuracy');
 subplot(1,2,1);
-plot(t,err_from_true, '-b');
+plot(t,mean_err_from_true, '-b');
+grid on;
 xlabel('# of random variables');
 ylabel('Squared error from the true value');
 title('Accuracy of the mean of rvs');
 subplot(1,2,2);
-plot(t,std_dev, '-b');
+plot(t,std_dev_err_from_true, '-b');
+grid on;
+xlabel('# of random variables');
+ylabel('Squared error from the true value');
+title('Accuracy of the variance of rvs');
+
+figure('Name', 'Experiment4 - Confidence Intervals');
+plot(t,mean_ci_high, '-.r');
+grid on;
 title('Confidence Intervals for the Variance using Normal Distribution N(0,1)');
 hold on;
-plot(t,ci_high, '-.r');
-hold on;
-plot(t,ci_low, '-.m');
+plot(t,mean_ci_low, '-.m');
 xlabel('# of random variables');
 ylabel('Confidence Intervals');
-legend('Variance \sigma^2','CI high', 'CI low')
+X = [t, fliplr(t)];
+Y = [mean_ci_high, fliplr(mean_ci_low)];
+fill(X, Y, 'y');
+hold on;
+plot(t,mean_std_dev, '-b');

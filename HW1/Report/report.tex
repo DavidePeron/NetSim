@@ -25,6 +25,8 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
 
+\geometry{vmargin={2cm, 2cm}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COLOR DEFINITIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -43,6 +45,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % "define" Scala
 \usepackage{listings}
+\usepackage[framed, numbered]{matlab-prettifier}
 \usepackage{xcolor}
 \lstset{escapeinside={<@}{@>}}
 
@@ -173,15 +176,70 @@
 \begin{document}
 \maketitle
 \section{}
-\section{}
+In the first exercise two datasets are given and on those, a bunch of figures have been plotted, in which the data are showed and different measures of confidence are calculated on them.
+
+The first dataset is a collection of execution times resulting from a first version of a program and a second more optimized one.
+In the follow the said figures are reported.
 
 \begin{figure}[ht]
 	\centering
 	\begin{minipage}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{CI_2}
-		\caption{Results of the experiment with $n=100$}
-		\label{fig:CI_2}
+		\includegraphics[width=\textwidth]{ex1fig2_1a}
+		\caption{Plot of the data}
+		\label{fig:data_exec}
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{ex1fig2_1}
+		\caption{Data plotted also in histograms divided in 10 bins (Figure 2.1)}
+		\label{fig:data_exec_hist}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{ex1fig2_2}
+		\caption{Empirical distribution function of the data (Figure 2.2) }
+		\label{fig:edf_exec}
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{ex1fig2_3}
+		\caption{Box Plots of the data with \gls{ci} for median and mean (Figure 2.3)}
+		\label{fig:box_plots_exec}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{ex1fig2_7}
+		\caption{Difference between old and new data (Figure 2.7) }
+		\label{fig:diff_exec}
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{ex1fig2_3}
+		\caption{Box Plots of the data with \gls{ci} for median and mean (Figure 2.3)}
+		\label{fig:box_plots_exec}
+	\end{minipage}
+\end{figure}
+
+\section{}
+
+
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{CI_48_2}
+		\caption{Results of the experiment with $n=48$}
+		\label{fig:CI_48_2}
 	\end{minipage}
 	\begin{minipage}{0.45\textwidth}
 		\centering
@@ -191,22 +249,8 @@
 	\end{minipage}
 \end{figure}
 
-From \autoref{fig:CI_2} and \autoref{fig:CI_10002} we can see that as much we increase n, the mean width of the \gls{ci} get lower. Note that the width of the \gls{ci} is not constant.
+Executing the script correspondent to the second exercise, we found that 56 experiments the \gls{ci} does not contain the true value of the mean.
 
-% \begin{lstlisting}[style=myScalastyle]
-% name := "RecommenderSBT"
-%
-% version := "0.1"
-%
-% scalaVersion := "2.11.12"
-%
-% val sparkVer = "2.1.0"
-%
-% libraryDependencies ++= Seq(
-%   "org.apache.spark" %% "spark-core" % sparkVer,
-%   "org.apache.spark" %% "spark-sql" % sparkVer,
-%   "org.apache.spark" %% "spark-mllib" % sparkVer,
-%   "com.github.fommil.netlib" % "all" % "1.1.2" pomOnly()
-% )
-% \end{lstlisting}
+In \autoref{fig:CI_48_2} and \autoref{fig:CI_10002} are reported the value of the sample mean and its \gls{ci} (with $\gamma=0.95$) for each experiment, sorted based on the lower extreme of the \gls{ci} and using a different number of random variables in each experiment.
+Note how, increasing the number of random variables per experiment, the mean width of the \gls{ci} get lower. Furthermore, the width of the \gls{ci} is not constant.
 \end{document}
