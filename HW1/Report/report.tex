@@ -136,7 +136,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %using amsmath package to redefine eq. numeration (1.1, 1.2, ...)
 %%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand{\theequation}{Equation \arabic{equation}}
+\renewcommand{\theequation}{\arabic{equation}}
 
 %set box background to grey in align environment
 \usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
@@ -257,6 +257,51 @@ In both cases, the sample mean is distributed around the true mean (that for thi
 Note how, increasing the number of random variables per experiment, the mean width of the \gls{ci} get lower. Furthermore, the width of the \gls{ci} is not constant.
 
 \section{}
+
+To calculate $\mathbf{E}(U_{(j)})$ we have firstly to compute the probability that at least an order statistic $U_{(j)}$ falls in $[u, u+du]$, that is $P_{U_{(j)}}(u)$. Actually the probability that more than one element falls in this interval is negligigble since is an $O(du^2)$, so we can take in account only the probability that exactly one element falls in $[u, u+du]$.
+
+This probability is given by the following expression:
+
+\begin{equation}\label{eq:p(u)}
+  \begin{split}
+    P_{U_{(j)}}(u) = P\bigg[\text{$j-1$ order statistics are in $[0, u]$}\bigg] &\cdot P\bigg[\text{1 order statistic is in $[u, u+du]$}\bigg] \\&\cdot P\bigg[\text{$n-j$ order statistics are in $[u+du, 1]$}\bigg]
+  \end{split}
+\end{equation}
+
+The probability that a realization of a random variable $\mathbf{U}(0,1)$ is in $[0, u]$ is $u$, we want $j-1$ realization over $n$ to be in this interval, so the resulting probability is:
+$$
+P\bigg[\text{$j-1$ order statistics are in $[0, u]$}\bigg] = \binom{n}{j-1}u^{j-1}
+$$
+Now we want the next order statistic to be in $[u, u+du]$, so we can choose from the remaining $n-j+1$ realization an element with probability $du$, that is:
+$$ P\bigg[\text{1 order statistic is in $[u, u+du]$}\bigg] = (n-j+1)du$$
+Finally, the last $n-j$ elements have to be in $[u+du,1]$, so:
+$$ P\bigg[\text{$n-j$ order statistics are in $[u+du, 1]$}\bigg] = (1-u-du)^{n-j} $$
+but since $du$ is very small by definition, we can ignore it rewriting this last equation as $(1-u)^{n-j}$.
+
+Multiplying these three terms, as specified in \autoref{eq:p(u)}, the final probability is:
+\begin{equation}
+  \label{eq:pu_calculated}
+  P_{U_{(j)}}(u) = \frac{n!}{(j-1)!(n-j)!}u^{j-1}\cdot du \cdot (1-u)^{n-j}
+\end{equation}
+
+The keypoint of the proof is to note that \autoref{eq:pu_calculated} is the PDF of a Beta distribution.
+Indeed a general Beta distribution is defined as
+\begin{equation}
+  \label{eq:beta}
+  f(x) = \frac{1}{\mathbf{B}(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}
+\end{equation}
+where $\mathbf{B}(\alpha,\beta)$ is called \textit{Beta function} and is defined as
+\begin{equation}
+  \label{eq:beta_func}
+  \mathbf{B}(\alpha,\beta) = \frac{(\alpha-1)!(\beta-1)!}{(\alpha+\beta-1)!}
+\end{equation}
+
+Given this definition, we can derive that $P_{U_{(j)}}(u)$ is distributed as a $Beta(j,n+1-j)$ and since the expected value of a \textit{Beta} distribution is defined as $\mathbf{E}[x] = \frac{\alpha}{\alpha+\beta}$, we conclude that
+\begin{equation}
+  \label{eq:ex_value}
+  \mathbf{E}\bigg[U_{(j)}\bigg] = \frac{j}{n+1}
+\end{equation}
+
 \section{}
 
 In \autoref{fig:ex4_accuracy} is plotted the accuracy of the sample mean versus the number of random variables in each experiment. This measure have been made based on the following formula:
@@ -274,9 +319,9 @@ where $A_i$ is the accuracy of the experiment $i$ and $x_i$ is the sample mean o
 	\end{minipage}
 	\begin{minipage}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{CI_10002}
+		\includegraphics[width=\textwidth]{ex4_accuracy}
 		\caption{Results of the experiment with $n=1000$}
-		\label{fig:CI_10002}
+		\label{fig:ex4_CI}
 	\end{minipage}
 \end{figure}
 
