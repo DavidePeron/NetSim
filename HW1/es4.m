@@ -5,15 +5,15 @@ close all;
 n=10;
 % Max number of rvs is n*num_samples
 num_samples = 100;
-% #experiments for each sample
-num_exp = 100;
 % Confidence level
 gamma = 0.95;
+r_0 = 25;
+R = ceil(2*r_0/(1-gamma)) - 1;
 
-mu = zeros(num_exp,num_samples);
-std_dev = zeros(num_exp,num_samples);
-ci_low = zeros(num_exp,num_samples);
-ci_high = zeros(num_exp,num_samples);
+mu = zeros(1,num_samples);
+std_dev = zeros(1,num_samples);
+ci_low = zeros(1,num_samples);
+ci_high = zeros(1,num_samples);
 zeta = zeros(1,num_samples);
 xi = zeros(1,num_samples);
 
@@ -23,33 +23,38 @@ for i=1:num_samples
 end
 
 for i=1:num_samples
-    for j= 1:num_exp
         % Generate n*i iid U(0,1) r.v.’s
         rv = rand(1,n*i);
 
         % Find sample mean, sample std dev and 95%-confidence interval for the variance
-        mu(j,i) = mean(rv);
-        deviation = arrayfun(@(x) (x-mu(j,i))^2, rv);
-        std_dev(j,i) = sum(deviation)/(n*i-1);
-        ci_low(j,i) = sqrt(std_dev(j,i)*zeta(i)/(n*i-1));
-        ci_high(j,i) = sqrt(std_dev(j,i)*xi(i)/(n*i-1));
-    end
+        mu(i) = mean(rv);
+        deviation = arrayfun(@(x) (x-mu(i))^2, rv);
+        std_dev(i) = sum(deviation)/(n*i-1);
+        %Use of bootstrap to calculate the CI for the variance
+        bootstrap = zeros(1,n*i);
+        ci = zeros(1,R);
+        for r = 1:R
+            for j = 1:n*i
+                pick = ceil(rand()*n*i);
+                bootstrap(j) = rv(pick);
+            end
+            deviation = arrayfun(@(x) (x-mu(i))^2, bootstrap);
+            ci(r) = sum(deviation)/(n*i-1);
+        end
+        ci = sort(ci);
+        ci_low(i) = ci(r_0);
+        ci_high(i) = ci(R+1-r_0);
 end
 
-mean_mu = mean(mu,1);
-mean_std_dev = mean(std_dev,1);
-mean_ci_low = mean(ci_low,1);
-mean_ci_high = mean(ci_high,1);
-
 %Study the accuracy of the estimate with respect to the true value vs. n
-mean_err_from_true = abs(mean_mu - 0.5);
-std_dev_err_from_true = abs(mean_std_dev - 1/12);
+err_from_true = abs(mu - 0.5);
+std_dev_err_from_true = abs(std_dev - 1/12);
 
 %Plot the results
 t = linspace(n, n*num_samples, num_samples);
 figure('Name', 'Experiment4 - Accuracy');
 subplot(1,2,1);
-plot(t,mean_err_from_true, '-b');
+plot(t,err_from_true, '-b');
 grid on;
 xlabel('# of random variables');
 ylabel('Squared error from the true value');
@@ -62,15 +67,15 @@ ylabel('Squared error from the true value');
 title('Accuracy of the variance of rvs');
 
 figure('Name', 'Experiment4 - Confidence Intervals');
-plot(t,mean_ci_high, '-.r');
+plot(t,ci_high, '-.r');
 grid on;
-title('Confidence Intervals for the Variance using Normal Distribution N(0,1)');
+title('Confidence Intervals for the Variance using Uniform Distribution U(0,1)');
 hold on;
 plot(t,ci_low, '-.m');
 xlabel('# of random variables');
 ylabel('Confidence Intervals');
 X = [t, fliplr(t)];
-Y = [mean_ci_high, fliplr(mean_ci_low)];
+Y = [ci_high, fliplr(ci_low)];
 fill(X, Y, 'y');
 hold on;
-plot(t,mean_std_dev, '-b');
+plot(t,std_dev, '-b');

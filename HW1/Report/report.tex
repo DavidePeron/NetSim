@@ -147,7 +147,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\DP}[1]{\textcolor{blue}{\textbf{(DP says: #1)}}}
-\newcommand{\cri}[1]{\textcolor{green}{\textbf{(Cri says: #1)}}}
 
 \makeatletter
 \let\reftagform@=\tagform@
@@ -178,7 +177,6 @@
 \section{}
 In the first exercise two datasets are given and on those, a bunch of figures have been plotted, in which the data are showed and different measures of confidence are calculated on them.
 
-The first dataset is a collection of execution times resulting from a first version of a program and a second more optimized one.
 In the follow the said figures are reported.
 
 \begin{figure}[ht]
@@ -249,7 +247,7 @@ In the follow the said figures are reported.
 	\end{minipage}
 \end{figure}
 
-Executing the script correspondent to the second exercise, we found that 56 experiments the \gls{ci} does not contain the true value of the mean.
+Executing the script correspondent to the second exercise, we found that in 56 experiments the \gls{ci} does not contain the true value of the mean.
 
 In \autoref{fig:CI_48_2} and \autoref{fig:CI_10002} are reported the value of the sample mean and its \gls{ci} (with $\gamma=0.95$) for each experiment, sorted based on the lower extreme of the \gls{ci} and using a different number of random variables in each experiment.
 In both cases, the sample mean is distributed around the true mean (that for this Uniform Distribution is $0.5$).
@@ -309,6 +307,9 @@ In \autoref{fig:ex4_accuracy} is plotted the accuracy of the sample mean versus 
   A_i = |\overline{x_i} - \overline{x}|
 \end{equation}
 where $A_i$ is the accuracy of the experiment $i$ and $x_i$ is the sample mean of the same experiment. As can be seen in the said figure, the accuracy get lower as the number of random variables in each experiment increase, this happens since the higher is the number of random variables, the higher is the precision of the experiment.
+
+In \autoref{fig:ex4_CI} is reported the variance of each experiment and the relative confidence interval computed using bootstrap method.
+
 \begin{figure}[ht]
 	\centering
 	\begin{minipage}{0.45\textwidth}
@@ -319,15 +320,17 @@ where $A_i$ is the accuracy of the experiment $i$ and $x_i$ is the sample mean o
 	\end{minipage}
 	\begin{minipage}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{ex4_accuracy}
-		\caption{Results of the experiment with $n=1000$}
+		\includegraphics[width=\textwidth]{ex4_CI}
+		\caption{Confidence intervals for the variance using rvs $U(0,1)$}
 		\label{fig:ex4_CI}
 	\end{minipage}
 \end{figure}
 
+\vspace{2cm}
+
 \section{}
 
-Redoing Exercise 2 the plot in \autoref{fig:ex2_48_N} and \autoref{fig:ex2_1000_N} have obtained.
+Redoing Exercise 2 the plot in \autoref{fig:ex2_48_N} and \autoref{fig:ex2_1000_N} have obtained \DP{il verbo non so se sia giusto}.
 Note that the sample mean now is distributed around the new true value, that is $0$.
 
 \begin{figure}[ht]
@@ -346,9 +349,7 @@ Note that the sample mean now is distributed around the new true value, that is 
 	\end{minipage}
 \end{figure}
 
-For the Exercise 4 the results are reported in \autoref{fig:ex4_N_accuracy} and \autoref{fig:ex4_N_CI}.
-
-Is visible how, also in this case, the accuracy get higher (that is, the distance between the sample mean and the true value get lower)  and the precision of the variance get higher (the \gls{ci} becomes smaller) as $n$ increases. Now the sample variance oscillates around $1$ that is in fact the new true value.
+For the Exercise 4 the results are reported in \autoref{fig:ex4_N_accuracy} and \autoref{fig:ex4_N_CI}. As in exercise 4, is visible how, the accuracy get higher (that is, the distance between the sample mean and the true value get lower)  and the precision of the variance get higher (the \gls{ci} becomes smaller) as $n$ increases. Now the sample variance oscillates around $1$ that is in fact the new true value.
 
 \begin{figure}[ht]
 	\centering
