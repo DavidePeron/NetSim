@@ -163,6 +163,7 @@
 
 \usepackage[acronym]{glossaries}
 \newacronym{ci}{CI}{Confidence Interval}
+\newacronym{pi}{PI}{Prediction Interval}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PREPARE TITLE
@@ -309,6 +310,7 @@ In \autoref{fig:ex4_accuracy} is plotted the accuracy of the sample mean versus 
 where $A_i$ is the accuracy of the experiment $i$ and $x_i$ is the sample mean of the same experiment. As can be seen in the said figure, the accuracy get lower as the number of random variables in each experiment increase, this happens since the higher is the number of random variables, the higher is the precision of the experiment.
 
 In \autoref{fig:ex4_CI} is reported the variance of each experiment and the relative confidence interval computed using bootstrap method.
+Finally, in \autoref{fig:PI_theory} and \autoref{fig:PI_bootstrap} are reported the prediction intervals at level $\gamma = 0.95$ using theory and using bootstrap.
 
 \begin{figure}[ht]
 	\centering
@@ -323,6 +325,22 @@ In \autoref{fig:ex4_CI} is reported the variance of each experiment and the rela
 		\includegraphics[width=\textwidth]{ex4_CI}
 		\caption{Confidence intervals for the variance using rvs $U(0,1)$}
 		\label{fig:ex4_CI}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{PI_theory}
+		\caption{Prediction interval for a $U(0,1)$ at level $\gamma = 0.95$ using theory}
+		\label{fig:PI_theory}
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{PI_bootstrap}
+		\caption{Prediction interval for a $U(0,1)$ at level $\gamma = 0.95$ using bootstrap}
+		\label{fig:PI_bootstrap}
 	\end{minipage}
 \end{figure}
 
@@ -364,6 +382,24 @@ For the Exercise 4 the results are reported in \autoref{fig:ex4_N_accuracy} and 
 		\includegraphics[width=\textwidth]{ex4_N_CI}
 		\caption{Confidence intervals for the variance using rvs $N(0,1)$}
 		\label{fig:ex4_N_CI}
+	\end{minipage}
+\end{figure}
+
+For what regards the \gls{pi}, we can see that using the relative theory, the \gls{pi} is (as expected) between [-2,2], that is the $\gamma$ quantile of the Normal Distribution $N(0,1)$. In the bootstrap case, the distribution is assumed unknown, and increasing the number of realizations for rv, the size of the prediction interval get lower.
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{PI_theory_N}
+		\caption{Prediction interval for a $N(0,1)$ at level $\gamma = 0.95$ using theory}
+		\label{fig:PI_theory_N}
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{PI_bootstrap_N}
+		\caption{Prediction interval for a $N(0,1)$ at level $\gamma = 0.95$ using bootstrap}
+		\label{fig:PI_bootstrap_N}
 	\end{minipage}
 \end{figure}
 \end{document}
