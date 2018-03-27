@@ -222,15 +222,44 @@ In the follow the said figures are reported.
 	\end{minipage}
 	\begin{minipage}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{ex1fig2_3}
-		\caption{Box Plots of the data with \gls{ci} for median and mean (Figure 2.3)}
-		\label{fig:box_plots_exec}
+		\includegraphics[width=\textwidth]{ex1fig2_8}
+		\caption{Normal Asymptotic and Bootstrap Percentile Confidence Intervals (Figure 2.8)}
+		\label{fig:figure2_8}
 	\end{minipage}
 \end{figure}
 
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{ex1fig2_10a}
+		\caption{(Figure 2.10a)}
+		\label{fig:figure2_10a}
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{ex1fig2_10c}
+		\caption{Autocorrelation of the plot in \autoref{fig:figure2_10a}(Figure 2.10c)}
+		\label{fig:figure2_10c}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\textwidth]{ex1fig2_10d}
+  \caption{Lag plots (Figure 2.10d)}
+  \label{fig:lag_plot}
+\end{figure}
+
+\newpage
 \section{}
 
+Executing the script correspondent to the second exercise, we found that in 56 experiments the \gls{ci} does not contain the true value of the mean.
 
+In \autoref{fig:CI_48_2} and \autoref{fig:CI_10002} are reported the value of the sample mean and its \gls{ci} (with $\gamma=0.95$) for each experiment, sorted based on the lower extreme of the \gls{ci} and using a different number of random variables in each experiment.
+In both cases, the sample mean is distributed around the true mean (that for this Uniform Distribution is $0.5$).
+
+Note how, increasing the number of random variables per experiment, the mean width of the \gls{ci} get lower.
 
 \begin{figure}[ht]
 	\centering
@@ -247,13 +276,6 @@ In the follow the said figures are reported.
 		\label{fig:CI_10002}
 	\end{minipage}
 \end{figure}
-
-Executing the script correspondent to the second exercise, we found that in 56 experiments the \gls{ci} does not contain the true value of the mean.
-
-In \autoref{fig:CI_48_2} and \autoref{fig:CI_10002} are reported the value of the sample mean and its \gls{ci} (with $\gamma=0.95$) for each experiment, sorted based on the lower extreme of the \gls{ci} and using a different number of random variables in each experiment.
-In both cases, the sample mean is distributed around the true mean (that for this Uniform Distribution is $0.5$).
-
-Note how, increasing the number of random variables per experiment, the mean width of the \gls{ci} get lower. Furthermore, the width of the \gls{ci} is not constant.
 
 \section{}
 
@@ -307,7 +329,7 @@ In \autoref{fig:ex4_accuracy} is plotted the accuracy of the sample mean versus 
 \begin{equation}
   A_i = |\overline{x_i} - \overline{x}|
 \end{equation}
-where $A_i$ is the accuracy of the experiment $i$ and $x_i$ is the sample mean of the same experiment. As can be seen in the said figure, the accuracy get lower as the number of random variables in each experiment increase, this happens since the higher is the number of random variables, the higher is the precision of the experiment.
+where $A_i$ is the accuracy of the experiment $i$ and $x_i$ is the sample mean of the same experiment. As can be seen in the said figure, the error from the true value get lower as the number of random variables in each experiment increase, this happens since the higher is the number of random variables, the higher is the precision of the experiment.
 
 In \autoref{fig:ex4_CI} is reported the variance of each experiment and the relative confidence interval computed using bootstrap method.
 Finally, in \autoref{fig:PI_theory} and \autoref{fig:PI_bootstrap} are reported the prediction intervals at level $\gamma = 0.95$ using theory and using bootstrap.
@@ -344,11 +366,9 @@ Finally, in \autoref{fig:PI_theory} and \autoref{fig:PI_bootstrap} are reported 
 	\end{minipage}
 \end{figure}
 
-\vspace{2cm}
-
 \section{}
 
-Redoing Exercise 2 the plot in \autoref{fig:ex2_48_N} and \autoref{fig:ex2_1000_N} have obtained \DP{il verbo non so se sia giusto}.
+Redoing Exercise 2, the plots in \autoref{fig:ex2_48_N} and \autoref{fig:ex2_1000_N} have been obtained.
 Note that the sample mean now is distributed around the new true value, that is $0$.
 
 \begin{figure}[ht]
@@ -385,9 +405,9 @@ For the Exercise 4 the results are reported in \autoref{fig:ex4_N_accuracy} and 
 	\end{minipage}
 \end{figure}
 
-For what regards the \gls{pi}, we can see that using the relative theory, the \gls{pi} is (as expected) between [-2,2], that is the $\gamma$ quantile of the Normal Distribution $N(0,1)$. In the bootstrap case, the distribution is assumed unknown, and increasing the number of realizations for rv, the size of the prediction interval get lower.
+For what regards the \gls{pi}, we can see that using the relative theory, the \gls{pi} is (as expected) between [-2,2], that is the $\gamma$ quantile of the Normal Distribution $N(0,1)$. In the bootstrap case, the result is very similar even if not so accurate as the theoretical result.
 
-\begin{figure}[ht]
+\begin{figure}[t]
 	\centering
 	\begin{minipage}{0.45\textwidth}
 		\centering

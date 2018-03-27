@@ -91,18 +91,15 @@ xticks([1 2]);
 xticklabels({'Old', 'New'});
 
 %CI for the mean
-%OLD
 mu_old = mean(sgbdold);
 mu_new = mean(sgbdnew);
 
-deviation_old = arrayfun(@(x) (x-mu_old)^2, sgbdold);
-var_old = sum(deviation_old)/n;
-deviation_new = arrayfun(@(x) (x-mu_new)^2, sgbdnew);
-var_new = sum(deviation_new)/n;
+var_old = sum((sgbdold-mu_old).^2)/n;
+var_new = sum((sgbdnew-mu_new).^2)/n;
 ci_high_old = mu_old + 1.96*sqrt(var_old/n);
 ci_low_old = mu_old - 1.96*sqrt(var_old/n);
-ci_high_new = mu_old + 1.96*sqrt(var_new/n);
-ci_low_new = mu_old - 1.96*sqrt(var_new/n);
+ci_high_new = mu_new + 1.96*sqrt(var_new/n);
+ci_low_new = mu_new - 1.96*sqrt(var_new/n);
 
 %Plot for the mean
 
@@ -120,4 +117,56 @@ xlim([0 3]);
 xticks([1 2]);
 xticklabels({'Old', 'New'});
 
-%% Figure 2.7
+%% Figure 2.8
+var_old_unb = sum((sgbdold-mu_old).^2)/(n-1);
+var_new_unb = sum((sgbdnew-mu_new).^2)/(n-1);
+ci_high_old_unb = mu_old + 1.96*sqrt(var_old_unb/n);
+ci_low_old_unb = mu_old - 1.96*sqrt(var_old_unb/n);
+ci_high_new_unb = mu_new + 1.96*sqrt(var_new_unb/n);
+ci_low_new_unb = mu_new - 1.96*sqrt(var_new_unb/n);
+
+
+y = [mu_old mu_new];
+neg = y - [ci_low_old ci_low_new];
+pos = [ci_high_old ci_high_new] - y;
+neg_unb = y - [ci_low_old_unb ci_low_new_unb];
+pos_unb = [ci_high_old_unb ci_high_new_unb] - y;
+
+
+gamma = 0.95;
+r_0 = 25;
+R = ceil(2*r_0/(1-gamma)) - 1;
+bootstrap_old = zeros(1,length(sgbdold));
+bootstrap_new = zeros(1,length(sgbdold));
+mu_old_boot = zeros(1,R);
+mu_new_boot = zeros(1,R);
+for r = 1:R
+    for j = 1:length(sgbdold)
+        pick = ceil(rand()*length(sgbdold));
+        bootstrap_old(j) = sgbdold(pick);
+        bootstrap_new(j) = sgbdnew(pick);    
+    end
+    mu_old_boot(r) = mean(bootstrap_old);
+    mu_new_boot(r) = mean(bootstrap_new);
+end
+mu_old_boot = sort(mu_old_boot);
+mu_new_boot = sort(mu_new_boot);
+ci_low_boot_old = mu_old_boot(r_0);
+ci_high_boot_old = mu_old_boot(R+1-r_0);
+ci_low_boot_new = mu_new_boot(r_0);
+ci_high_boot_new = mu_new_boot(R+1-r_0);
+
+neg_boot = y - [ci_low_boot_old ci_low_boot_new];
+pos_boot = [ci_high_boot_old ci_high_boot_new] - y;
+
+figure('Name', 'Figure 2.8');
+errorbar([1 2], y, neg, pos, 'o');
+hold on;
+errorbar([1.2 2.2], y, neg_unb, pos_unb, 'o');
+hold on;
+errorbar([1.4 2.4], y, neg_boot, pos_boot, 'or');
+title('Normal Asymptotic and Bootstrap Percentile Confidence Intervals');
+ylim([0 70]);
+xlim([0.9 2.5]);
+xticks([1 2]);
+legend('Normal', 'General', 'Bootstrap');

@@ -5,8 +5,6 @@ close all;
 n=100;
 % Max number of rvs is n*num_samples
 num_samples = 100;
-% #experiments for each sample
-num_exp = 100;
 % Confidence level
 gamma = 0.95;
 r_0 = 25;
@@ -42,26 +40,18 @@ for i=1:num_samples
     pi_low(i) = mu(i) - 1.99*sqrt(std_dev(i));
     pi_high(i) = mu(i) + 1.99*sqrt(std_dev(i));
     
-    bootstrap = zeros(1,n*i);
-    pi = zeros(1,R);
+    bootstrap = zeros(R,n*i);
     for r = 1:R
         for j = 1:n*i
             pick = ceil(rand()*n*i);
-            bootstrap(j) = rv(pick);
+            bootstrap(r,j) = rv(pick);
         end
-        pi(r) = mean(bootstrap);
     end
-    pi = sort(pi);
-    pi_low_boot(i) = pi(r_0);
-    pi_high_boot(i) = pi(R+1-r_0);
+    bootstrap = sort(bootstrap, 2);
+    mean_boot = mean(bootstrap, 1);
+    pi_low_boot(i) = mean_boot(floor(n*i*(1-gamma)/2));
+    pi_high_boot(i) = mean_boot(ceil(n*i*(1+gamma)/2));
 end
-
-% $$$ mean_mu = mean(mu,1);
-% $$$ mean_std_dev = mean(std_dev,1);
-% $$$ mean_ci_low = mean(ci_low,1);
-% $$$ mean_ci_high = mean(ci_high,1);
-% $$$ mean_pi_low = mean(pi_low,1);
-% $$$ mean_pi_high = mean(pi_high,1);
 
 %Study the accuracy of the estimate with respect to the true value vs. n
 mean_err_from_true = abs(mu);
@@ -100,9 +90,9 @@ ylabel('Confidence Intervals');
 figure('Name', 'Experiment4 - Prediction Intervals using theory');
 errorbar(t, mu, mu - pi_low, pi_high - mu, '.');
 grid on;
-title('Prediction intervals at level 0.95 using theory');
+title('Prediction intervals at level 0.95 using theory with a N(0,1)');
 
 figure('Name', 'Experiment4 - Prediction Interval using bootstrap');
 errorbar(t, mu, mu - pi_low_boot, pi_high_boot - mu, '.');
 grid on;
-title('Prediction intervals at level 0.95 using bootstrap');
+title('Prediction intervals at level 0.95 using bootstrap with a N(0,1)');

@@ -27,6 +27,7 @@ for i=1:num_samples
 end
 
 for i=1:num_samples
+    bootstrap = zeros(R,n*i);
     % Generate n*i iid U(0,1) r.v.’s
     rv = rand(1,n*i);
 
@@ -34,23 +35,21 @@ for i=1:num_samples
     mu(i) = mean(rv);
 		std_dev(i) = sum((rv-mu(i)).^2)/(n*i-1);
     %Use of bootstrap to calculate the CI for the variance and PI
-    bootstrap = zeros(1,n*i);
     ci = zeros(1,R);
-    pi = zeros(1,R);
     for r = 1:R
         for j = 1:n*i
             pick = ceil(rand()*n*i);
-            bootstrap(j) = rv(pick);
+            bootstrap(r,j) = rv(pick);
         end
-        pi(r) = mean(bootstrap);
-        ci(r) = sum((bootstrap-mu(i)).^2)/(n*i-1);
+        ci(r) = sum((bootstrap(r,:)-mu(i)).^2)/(n*i-1);
     end
     ci = sort(ci);
     ci_low(i) = ci(r_0);
     ci_high(i) = ci(R+1-r_0);
-    pi = sort(pi);
-    pi_low_boot(i) = pi(r_0);
-    pi_high_boot(i) = pi(R+1-r_0);
+    bootstrap = sort(bootstrap, 2);
+    mean_boot = mean(bootstrap, 1);
+    pi_low_boot(i) = mean_boot(floor(n*i*(1-gamma)/2));
+    pi_high_boot(i) = mean_boot(ceil(n*i*(1+gamma)/2));
     
     %Compute PI using theory (non normal distribution)
     rv_sorted = sort(rv);
@@ -89,9 +88,9 @@ ylabel('Confidence Intervals');
 figure('Name', 'Experiment4 - Prediction Intervals using theory');
 errorbar(t, mu, mu - pi_low_th, pi_high_th - mu, '.');
 grid on;
-title('Prediction intervals at level 0.95 using theory');
+title('Prediction intervals at level 0.95 using theory with a U[0,1]');
 
 figure('Name', 'Experiment4 - Prediction Interval using bootstrap');
 errorbar(t, mu, mu - pi_low_boot, pi_high_boot - mu, '.');
 grid on;
-title('Prediction intervals at level 0.95 using bootstrap');
+title('Prediction intervals at level 0.95 using bootstrap with a U[0,1]');
