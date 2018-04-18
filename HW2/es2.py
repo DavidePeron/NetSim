@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import time
 
-n_rvs = 100000
-np.random.seed(398)
+n_rvs = 10000
+np.random.seed(39788)
 ##Generate Binomial Distribution in 3 different ways
 
 n = 50
@@ -24,7 +24,7 @@ for i in range(0,n_rvs):
         X_geometric += np.floor(np.log(u)/np.log(1-theta)) + 1
         if X_geometric >= n :
             isFinished = True
-        else:
+        if X_geometric <= n:
             count += 1
     mean_geometric += count
 end = time.time()
@@ -50,12 +50,12 @@ print('BERNOULLI Time elapsed: ' + str(time_bernoulli) + ' Mean: ' + str(mean_be
 start = time.time()
 c = theta/(1-theta)
 for i in range(0,n_rvs):
-    pr = theta**n
+    pr = (1-theta)**n
     u = np.random.rand()
     i = 0
     F = pr
     while u >= F:
-        pr *= c*(n-1)/(i+1)
+        pr *= c*(n-i)/(i+1)
         F += pr
         i += 1
     X_CDF = i
