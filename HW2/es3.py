@@ -3,8 +3,8 @@ import math
 import time
 
 lambda_par = 5
-#CDF Inversion
 n_vars = 10000
+#CDF Inversion
 mean_CDF = 0
 start = time.time()
 for k in range(0,n_vars):

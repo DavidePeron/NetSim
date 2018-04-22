@@ -24,12 +24,12 @@ ax.get_lines()[0].set_markersize(4.0)
 ax.set_title("QQ Plot vs an uniform distribution")
 plt.grid()
 plt.tight_layout()
-plt.savefig('fig-6_5a.eps')
+plt.savefig('fig-6_5a.pdf')
 
 plt.figure(2)
 autocorrelation_plot(x)
 plt.tight_layout()
-plt.savefig('fig-6_5b.eps')
+plt.savefig('fig-6_5b.pdf')
 
 fig = plt.figure(3)
 original_x = x;
@@ -39,7 +39,7 @@ for i in range(1,10):
     plt.plot(original_x, x, '.', markersize=1)
     ax.set_title("h = " + str(100*i))
 plt.tight_layout()
-plt.savefig('fig-6_5c.eps')
+plt.savefig('fig-6_5c.pdf')
 
 #Figure 6.7
 s1 = 1
@@ -54,7 +54,7 @@ fig = plt.figure(4)
 plt.plot(x1, x2, '.', markersize=1)
 plt.title('Two Streams, seeds = 1 and 2')
 plt.tight_layout()
-plt.savefig('fig-6_7a.eps')
+plt.savefig('fig-6_7a.pdf')
 
 #Qui non riesco a mettere x2[-1] o comunque seeds < 1,s2*a**i risulta troppo grande
 s2 = 568
@@ -67,7 +67,7 @@ fig = plt.figure(5)
 plt.plot(x1, x2, '.', markersize=1)
 plt.title('Two Streams, seeds = 1 and ' + str(s2))
 plt.tight_layout()
-plt.savefig('fig-6_7b.eps')
+plt.savefig('fig-6_7b.pdf')
 
 # #Figure 6.10 (a)
 np.random.seed(1)
@@ -88,7 +88,7 @@ for i in range(0,2000):
 fig = plt.figure(6)
 plt.bar(sample_dist, dist)
 plt.tight_layout()
-plt.savefig('fig-6_10a.eps')
+plt.savefig('fig-6_10a.pdf')
 
 #Figure 6.10 (b)
 x_1_dist = []
@@ -107,5 +107,5 @@ for i in range(0,20000):
 fig = plt.figure(7)
 plt.plot(x_1_dist, x_2_dist, '.', markersize=1)
 plt.tight_layout()
-plt.savefig('fig-6_10b.eps')
+plt.savefig('fig-6_10b.pdf')
 plt.close()

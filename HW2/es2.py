@@ -15,7 +15,7 @@ mean_CDF = 0
 # Using Geometric Distribution
 
 start = time.time()
-for i in range(0,n_rvs):
+for _ in range(0,n_rvs):
     isFinished = False
     X_geometric = 0
     count = 0
@@ -34,7 +34,7 @@ print('GEOMETRIC Time elapsed: ' + str(time_geometric) + ' Mean: ' + str(mean_ge
 # Drawing n Bernoulli rvs
 start = time.time()
 
-for i in range(0,n_rvs):
+for _ in range(0,n_rvs):
     X_bernoulli = 0
     for i in range(0,50):
         u = np.random.rand()
@@ -47,9 +47,11 @@ print('BERNOULLI Time elapsed: ' + str(time_bernoulli) + ' Mean: ' + str(mean_be
 
 # With CDF inversion
 
+X_CDF = []
+F_CDF = []
 start = time.time()
 c = theta/(1-theta)
-for i in range(0,n_rvs):
+for _ in range(0,n_rvs):
     pr = (1-theta)**n
     u = np.random.rand()
     i = 0
@@ -58,8 +60,11 @@ for i in range(0,n_rvs):
         pr *= c*(n-i)/(i+1)
         F += pr
         i += 1
-    X_CDF = i
-    mean_CDF += X_CDF
+    X_CDF.append(i)
+    F_CDF.append(F)
+    mean_CDF += i
 end = time.time()
 time_CDF = end - start
 print('CDF Time elapsed: ' + str(time_CDF) + ' Mean: ' + str(mean_CDF/n_rvs))
+PDF_CDF = [x for _,x in sorted(zip(X_CDF, F_CDF))]
+X_CDF = sorted(X_CDF)
