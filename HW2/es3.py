@@ -7,6 +7,7 @@ n_vars = 10000
 #CDF Inversion
 mean_CDF = 0
 start = time.time()
+
 for k in range(0,n_vars):
     u = np.random.rand()
     i = 0
@@ -32,7 +33,7 @@ for i in range(0,n_vars):
     while sum <= 1:
         sum += -math.log(np.random.rand())/lambda_par
         n_exp += 1
-    mean_exp += n_exp - 1
+    mean_exp += n_exp - 1 
 
 mean_exp /= n_vars
 end = time.time()

@@ -10,6 +10,12 @@
 % mathtools for: Aboxed (put box on last equation in align environment)
 \usepackage{microtype} %improves the spacing between words and letters
 
+% Packages for tables
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{booktabs}
+
 \usepackage{lipsum}
 \usepackage{threeparttable}
 \usepackage{tabularx}
@@ -224,7 +230,7 @@ In the follow the said figures are reported.
 
 \newpage
 \section{}
-Trying to generate a set Binomial random variables $B(n,p)$ with $n=50$ and $p=0.5$, we can see that the fastest approach is the CDF inversion technique, although extracting $n$ Bernoulli rvs is much faster than the Geometric method.
+Trying to generate a Binomial random variables $B(n,p)$ with $n=50$ and $p=0.5$, we can see that the fastest approach is the CDF inversion technique, although extracting $n$ Bernoulli rvs is much faster than the Geometric method.
 In the follow, the three different implementations are presented.
 
 The first method inplemented is the one of the CDF inversion.
@@ -267,8 +273,9 @@ end = time.time()
 time_bernoulli = end - start
 \end{python}
 
-A method to avoid to draw $n$ Bernoulli rvs is to count how much geometric fits into $n$ trials
-\DP{Qui è da rivedere}, although this approach is the one that requires less operations, is the slower one, probably due to the computational complexity of the $log$ function.
+A method to avoid to draw $n$ Bernoulli rvs is to count how much geometric fits into $n$ trials, although this approach is the one that requires less operations, is the slower one, probably due to the computational complexity of the $log$ function.
+
+For each approach, $10000$ realization of the rv has been created. The time elapsed by each technique is reported in \autoref{table:simTime}.
 
 \begin{python}
   # Using Geometric Distribution
@@ -290,9 +297,27 @@ end = time.time()
 time_geometric = end - start
 \end{python}
 
+\begin{table}[ht]
+\small
+	\centering
+    \renewcommand{\arraystretch}{1}% Tighter
+	\begin{tabular}{@{}lll@{}}
+	\toprule
+    Type & Time elapsed(s) & Mean of rv\\ \midrule
+    CDF Inversion & 0.1165218 & 25.0093\\
+    Bernoulli & 0.2815795 & 24.9886\\
+    Geometric & 2.1662595 & 24.9641\\
+    \bottomrule
+    \end{tabular}
+	\caption{Time elapsed in the different simulations creating a Binomial random variable.} 
+	\label{table:simTime}
+\end{table}
+
+
 \section{}
-Trying to generate a set Poisson random variables $P(\lambda)$ with $\lambda = 5$, we can see that, also in this case, the fastest method is the CDF inversion technique, immediately followed by the Uniform rvs method and the Exponential one.
+Trying to generate a Poisson random variables $P(\lambda)$ with $\lambda = 5$, we can see that, also in this case, the fastest method is the CDF inversion technique, immediately followed by the Uniform rvs method and the Exponential one.
 In the follow, the three different implementations are presented.
+For each approach, $10000$ realization of the rv has been created. The time elapsed by each technique is reported in \autoref{table:simTimePoisson}.
 
 The first method inplemented is the one of the CDF inversion.
 \begin{python}
@@ -349,5 +374,129 @@ for i in range(0,n_vars):
 mean_unif /= n_vars
 end = time.time()
 time_unif = end - start
-  \end{python}
+\end{python}
+
+\begin{table}[ht]
+\small
+	\centering
+    \renewcommand{\arraystretch}{1}% Tighter
+	\begin{tabular}{@{}lll@{}}
+	\toprule
+    Type & Time elapsed(s) & Mean of rv\\ \midrule
+    CDF Inversion & 0.02857 & 5.0246\\
+    Exponential & 0.05651 & 4.9638\\
+    Uniform & 0.05166 & 5.0179\\
+    \bottomrule
+    \end{tabular}
+	\caption{Time elapsed in the different simulations creating a Poisson random variable.}
+	\label{table:simTimePoisson}
+\end{table}
+
+\section{}
+The last two exercise show how random numbers generated with a \gls{lcg} are not \textit{properly} random.
+The general formula of a \gls{lcg} is in \autoref{eq:lcg}.
+\begin{equation}
+  \label{eq:lcg}
+  x_n = (a \cdot x_{n-1} + b)mod ~m
+\end{equation}
+In fourth exercise two different \gls{lcg} have been taken in account. The first one has $a = 18$ and $m = 101$, the implementation is the following and the pairs $(U_i, U_{i+1})$ are plotted in \autoref{fig:es4_a}. In the second case $a = 2$ and $m = 101$ and the same pairs are plotted in \autoref{fig:es4_b}. Both \gls{lcg} are non full-period and a strong correlation is showed in the plots.
+\begin{python}
+  #LCG1
+  a = 18
+  x = []
+  x.append((a*s+b)%m)
+  periodReached = False
+  while not periodReached:
+  x_new =  (a*x[-1] + b)%m
+  if x_new in x:
+  periodReached = True
+  else:
+  x.append(x_new)
+
+  x[:] = [k/m for k in x] #Normalization of x
+  print('Period of LCG1 is ' + str(len(x)) + '\n')
+  if len(x) < m:
+  print('LCG1 is not full period')
+  elif len(x) == m:
+  print('LCG1 is full period')
+
+  fig = plt.figure(1)
+  for i in range(0,len(x)):
+  for j in range(0,len(x)):
+  plt.plot(x[i],x[j], '.', markersize=2)
+
+  plt.tight_layout()
+  plt.savefig('es4_a.pdf')
+\end{python}
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{es4_a}
+		\caption{Pairs $(U_i, U_{i+1})$ of the first \gls{lcg}}
+		\label{fig:es4_a}
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{es4_b}
+		\caption{Pairs $(U_i, U_{i+1})$ of the second \gls{lcg}}
+    \label{fig:es4_b}
+	\end{minipage}
+\end{figure}
+
+\section{}
+In the last exercise, a similar \gls{lcg} has been taken in account. This time the parameters are  $a = 65539$ and $m = 2^{31}$. The result is a non full-period \gls{lcg} where the pairs  $(U_i, U_{i+1})$ seems actually random (see \autoref{fig:es5_a}), but if we see at the tuple  $(U_i, U_{i+1}, U_{i+2})$ in \autoref{fig:es5_b}, a strong correlation is visible in the \gls{lcg}'s realizations. The correspondent code follows the figures.
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{es5_a}
+		\caption{Pairs $(U_i, U_{i+1})$ of the last \gls{lcg}}
+		\label{fig:es5_a}
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{es5_b}
+		\caption{Tuple $(U_i, U_{i+1}, U_{i+2})$ of the last \gls{lcg}}
+    \label{fig:es5_b}
+	\end{minipage}
+\end{figure}
+
+\begin{python}
+  m = 2**31
+  b = 1
+  s = 653
+  #LCG
+  a = 65539
+  x = []
+  x.append((a*s+b)%m)
+  start = time.time()
+  for i in range(0,1200):
+    x.append((a*x[-1] + b)%m)
+
+  x[:] = [k/m for k in x] #Normalization of x
+
+  fig = plt.figure(1)
+  for i in range(0,len(x) - 1):
+    plt.plot(x[i],x[i+1], '.b', markersize=2)
+
+  plt.tight_layout()
+  plt.savefig('es5_a.pdf')
+
+  print(range(11,17))
+
+  fig = plt.figure(2)
+  ax = fig.add_subplot(111, projection='3d')
+  for i in range(0,len(x) - 2):
+    ax.scatter(x[i],x[i+1], x[i+2], c='b', marker='.')
+
+  ax.view_init(azim=50)
+  # ax.view_init(elev=60)
+  plt.tight_layout()
+  plt.savefig('es5_b.pdf')
+  end = time.time()
+  print('Time = '+str(end - start))
+\end{python}
 \end{document}
