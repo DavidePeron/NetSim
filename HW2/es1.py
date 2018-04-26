@@ -59,7 +59,7 @@ plt.savefig('fig-6_7a.pdf')
 #Qui non riesco a mettere x2[-1] o comunque seeds < 1,s2*a**i risulta troppo grande
 s2 = 568
 x2 = []
-print(s2*a**10)
+
 for i in range(0,1000):
     x2.append(((s2*a**i)%m)/m)
 

@@ -27,11 +27,12 @@ x[:] = [k/m for k in x] #Normalization of x
 
 fig = plt.figure(2)
 ax = fig.add_subplot(111, projection='3d')
-for i in range(0,len(x) - 2):
-    ax.scatter(x[i],x[i+1], x[i+2], c='b', marker='.')
-ax.view_init(azim=50)
-# ax.view_init(elev=60)
-plt.tight_layout()
-plt.savefig('es5_b.pdf')
+x_1 = np.roll(x, 1)[2:]
+x_2 = np.roll(x, 2)[2:]
+x = x[2:]
+ax.scatter(x_2, x_1, x, c='b', marker='.')
+# plt.tight_layout()
+# plt.savefig('es5_b.pdf')
 end = time.time()
 print('Time = '+str(end - start))
+plt.show()
