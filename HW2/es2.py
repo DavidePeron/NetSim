@@ -1,10 +1,9 @@
-import pandas as pd
 import numpy as np
 import time
 
 n_rvs = 10000
 np.random.seed(39788)
-##Generate Binomial Distribution in 3 different ways
+# Generate Binomial Distribution in 3 different ways
 
 n = 50
 theta = 0.5
@@ -15,7 +14,7 @@ mean_CDF = 0
 # Using Geometric Distribution
 
 start = time.time()
-for _ in range(0,n_rvs):
+for _ in range(0, n_rvs):
     isFinished = False
     X_geometric = 0
     count = 0
@@ -46,7 +45,6 @@ time_bernoulli = end - start
 print('BERNOULLI Time elapsed: ' + str(time_bernoulli) + ' Mean: ' + str(mean_bernoulli/n_rvs))
 
 # With CDF inversion
-
 X_CDF = []
 F_CDF = []
 start = time.time()

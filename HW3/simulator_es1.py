@@ -38,6 +38,8 @@ def run_queue(slots_counter, a):
     #Metrics
     queue_size = [0]
     delay = []
+    num_arrivals = 0
+    discarded_pkts = 0
 
     queue = []
     server = False

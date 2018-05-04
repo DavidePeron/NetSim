@@ -45,12 +45,16 @@ def next_event(a, queue, server):
 #slots_counter : number of iteration of the simulation
 # 1/b : mean of the service time (geometric)
 # a : arrival's probability
-def run_queue(slots_counter, b = 0.2, a = 0.5):
+def run_queue(slots_counter, b = 0.2, a = 0.5, limited_size = False, maximum_size = 3):
 
+    # print('Max size: '+ str(maximum_size))
+    # print('Limited Queue: ' + str(limited_size))
     #Metrics
     queue_size = [0]
     delay = []
     busy_slots = 0
+    num_arrivals = 0
+    discarded_pkts = 0
 
     queue = []
     server = {'busy': False, 'counter': 0}
@@ -62,14 +66,16 @@ def run_queue(slots_counter, b = 0.2, a = 0.5):
 
         # Update packet's delay
         queue = [pkt+event[0] for pkt in queue]
-        # print(queue)
-        # print(server)
-        # print(event)
 
         # Insert a packet (an int starting from 1 that increase at each iteration
         # and indicates the number of slots that they remain in the queue)
         if event[2]:
-            queue.insert(0,0)
+            num_arrivals += 1
+            # Check if the queue has a limited size and in that case if is at its max dimension
+            if not limited_size or (limited_size and len(queue) < maximum_size):
+                queue.insert(0,0)
+            else:
+                discarded_pkts += 1
 
         # Update departures
         if event[1]:
@@ -97,4 +103,5 @@ def run_queue(slots_counter, b = 0.2, a = 0.5):
     # The remaining time of the last packet in the server is removed by busy_slots since is not part
     # of the simulated slots.
     metrics['busy_slots'] = busy_slots - server['counter']
+    metrics['p_overflow'] = float(discarded_pkts)/num_arrivals
     return metrics

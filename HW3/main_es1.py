@@ -1,10 +1,10 @@
-import simulator as sim
+import simulator_es1 as sim
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
 slots_counter = 10000
-a = [1/4, 1/3, 1/2]
+a = [0.25, 0.33, 0.5]
 # a = np.linspace(0.001, 1/3, num=100)
 
 # Run Simulator
@@ -22,7 +22,7 @@ plt.title('Queue size vs Time')
 
 for key, run in metrics.items():
     plt.semilogy(range(0,len(run['queue_size'])), run['queue_size'], label='a = ' + str(round(key,2)))
-    
+
 
 plt.legend(loc = 2)
 plt.xlabel('Time')
