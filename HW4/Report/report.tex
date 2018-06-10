@@ -1,0 +1,181 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lipsum}
+\usepackage{eurosym}
+\usepackage{rotating}
+
+\usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools}
+% mathtools for: Aboxed (put box on last equation in align environment)
+\usepackage{microtype} %improves the spacing between words and letters
+
+% Packages for tables
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{booktabs}
+
+\usepackage{lipsum}
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{booktabs}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\usepackage{graphicx}
+\graphicspath{ {./figures/} {./eps/}}
+\usepackage{epsfig}
+\usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+\geometry{vmargin={2cm, 2cm}}
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COLOR DEFINITIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ % Enabling mixing colors and color's call by 'svgnames'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{MyColor1}{HTML}{CC0000} %mix personal color
+\newcommand{\textb}{\color{Black} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\blue}{\color{MyColor1} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\blueb}{\color{MyColor1} \usefont{OT1}{lmss}{b}{n}}
+\newcommand{\red}{\color{LightCoral} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\green}{\color{Turquoise} \usefont{OT1}{lmss}{m}{n}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Scala coloring settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% "define" Scala
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{escapeinside={<@}{@>}}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false            %
+}}
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FONTS AND COLORS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%		SECTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{titlesec}
+\usepackage{sectsty}
+%%%%%%%%%%%%%%%%%%%%%%%%
+%set section/subsections HEADINGS font and color
+\sectionfont{\color{MyColor1}}  % sets colour of sections
+\subsectionfont{\color{MyColor1}}  % sets colour of sections
+
+%set section enumerator to arabic number (see footnotes markings alternatives)
+\renewcommand\thesection{Exercise \arabic{section}} %define sections numbering
+\renewcommand\thesubsection{\thesection.\arabic{subsection}} %subsec.num.
+
+%define new section style
+\newcommand{\mysection}{
+\titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}}
+{\thesection} {3pt} {} }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%		CAPTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{caption}
+\usepackage{subcaption}
+%%%%%%%%%%%%%%%%%%%%%%%%
+\captionsetup[figure]{labelfont={color=MyColor1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%		!!!EQUATION (ARRAY) --> USING ALIGN INSTEAD
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%using amsmath package to redefine eq. numeration (1.1, 1.2, ...)
+%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\theequation}{\arabic{equation}}
+
+%set box background to grey in align environment
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+\makeatletter
+\patchcmd{\@Aboxed}{\boxed{#1#2}}{\colorbox{black!15}{$#1#2$}}{}{}%
+\patchcmd{\@boxed}{\boxed{#1#2}}{\colorbox{black!15}{$#1#2$}}{}{}%
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\DP}[1]{\textcolor{blue}{\textbf{(DP says: #1)}}}
+
+\makeatletter
+\let\reftagform@=\tagform@
+\def\tagform@#1{\maketag@@@{(\ignorespaces\textcolor{red}{#1}\unskip\@@italiccorr)}}
+\renewcommand{\eqref}[1]{\textup{\reftagform@{\ref{#1}}}}
+\makeatother
+\usepackage[hidelinks]{hyperref}
+
+%% LISTS CONFIGURATION %%
+\usepackage{enumitem}
+\setlist[enumerate,1]{start=0}
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+
+\usepackage[acronym]{glossaries}
+\newacronym{ci}{CI}{Confidence Interval}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PREPARE TITLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\blue Network analysis and simulation\\ Homework 1}
+\author{Davide Peron}
+\date{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+\section{}
+In the first exercise the implementation of an event-driven simulation is required.
+I chose the second case proposed, I implemented a queue with Poisson arrivals of parameter $\lambda$ and a single server with service time 1 time unit with probability $p$ or 2 time units with probability $1-p$.
+The following plot shows the average delay in the queue when the activity factor $\rho$ varies from $0.1$ to $1$. As can be seen, the queue becomes unstable for $\rho$ close to 1.
+
+\begin{figure}[ht]
+  \includegraphics[width=\linewidth]{delay_vs_rho}
+\end{figure}
+
+\newpage
+\section{}
+The second exercise is required to choose one of the example seen in class and to compare the results of the simulations made using the raw estimator with those obtained using one of the variance reduction techniques. I chose the exercise 8d, where antithetic variables are used to reduce exponential r.v.'s variance.
+The following plot shows the two different variance and their 95\% \gls{ci}.
+
+\begin{figure}[ht]
+  \includegraphics[width=\linewidth]{antithetics}
+\end{figure}
+\end{document}

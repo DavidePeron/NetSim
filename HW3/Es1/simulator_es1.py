@@ -33,13 +33,14 @@ def next_event(a, queue, server):
             arrival = True
     return event
 
-def run_queue(slots_counter, a):
+def run_queue(slots_counter, a, limited_size = False, maximum_size = 3):
 
     #Metrics
     queue_size = [0]
     delay = []
     num_arrivals = 0
     discarded_pkts = 0
+    busy_slots = 0
 
     queue = []
     server = False
@@ -50,9 +51,13 @@ def run_queue(slots_counter, a):
         event = next_event(a, queue, server)
 
         # Update arrivals
-        # Insert a packet (an int starting from 1 that increase at each iteration and indicates the number of slots that they remain in the queue)
+        num_arrivals += event[2]
+        # Insert new packets in the queue (an int starting from 1 that increase at each iteration and indicates the number of slots that they remain in the queue)
         for _ in range(0,event[2]):
-            queue.insert(0,0)
+            if not limited_size or (limited_size and len(queue) < maximum_size):
+                queue.insert(0,0)
+            else:
+                discarded_pkts += 1
 
         # Update departures
         server = False
@@ -61,6 +66,7 @@ def run_queue(slots_counter, a):
             delay.append(queue[-1])
             queue.pop()
             server = True
+            busy_slots += 1
 
         # Update packet's delay
         queue = [pkt+1 for pkt in queue]
@@ -73,4 +79,6 @@ def run_queue(slots_counter, a):
     metrics = {}
     metrics['delay'] = delay
     metrics['queue_size'] = queue_size
+    metrics['busy_slots'] = busy_slots - 1*server
+    metrics['p_overflow'] = float(discarded_pkts)/num_arrivals
     return metrics

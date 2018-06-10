@@ -1,2 +1,6 @@
 Slides/
 Books/
+
+*.aux
+*.log
+*.out

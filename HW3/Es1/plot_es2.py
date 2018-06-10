@@ -1,10 +1,10 @@
 import csv
 import matplotlib.pyplot as plt
 
-b = [0.33, 0.5, 0.66]
-csvfile = csv.reader(open('es1.csv'), delimiter=',')
-size = next(csvfile)
-size = list(map(int, size))
+csvfile = csv.reader(open('es2.csv'), delimiter=',')
+
+b = list(map(int, next(csvfile)))
+size = list(map(int, next(csvfile)))
 
 plt.figure(1)
 plt.title(r'Queue size vs b for $P[Overflow] = 1e-5$')

@@ -16,23 +16,19 @@ b = [0.33, 0.5, 0.66]
 metrics = {}
 average_delay = []
 rho = []
-p_overflow = []
 #Exercise 1.a and 1.b
 # for i in b:
 #     delay = 0
 #     rho_tmp = 0
-#     p_overflow_tmp = 0
 #     for k in range(0, num_simulations):
 #         metrics[i] = sim.run_queue(slots_counter, i, limited_size = blocking_queue, maximum_size = queue_size)
 #         delay += np.mean(metrics[i]['delay'])
 #         rho_tmp += float(metrics[i]['busy_slots'])/slots_counter
-#         p_overflow_tmp += metrics[i]['p_overflow']
 #     average_delay.append(float(delay)/num_simulations)
 #     rho.append(float(rho_tmp)/num_simulations)
-#     p_overflow.append(float(p_overflow_tmp)/num_simulations)
 
 # Exercise 1.c
-writer = csv.writer(open('es1.csv', 'w'), delimiter=',')
+writer = csv.writer(open('es2.csv', 'w'), delimiter=',')
 size = []
 for i in b:
     size_found = False
@@ -49,6 +45,8 @@ for i in b:
             queue_size += 1
     size.append(queue_size)
     print('Size for b=' + str(i) + ' is ' + str(queue_size))
+
+writer.writerow(b)
 writer.writerow(size)
 
 # plt.figure(1)
@@ -81,23 +79,5 @@ writer.writerow(size)
 # plt.grid()
 # plt.tight_layout()
 # plt.savefig('avg_delay_vs_rho.pdf')
-
-# plt.figure(4)
-# plt.title(r'$P[overflow]$ vs b')
-# plt.plot(b, p_overflow, lw=1, markersize=1)
-# plt.xlabel('Parameter of the geometric service time')
-# plt.ylabel('P[Overflow]')
-# plt.grid()
-# plt.tight_layout()
-# plt.savefig('p_overflow_vs_b.pdf')
-
-# plt.figure(5)
-# plt.title(r'Queue size vs b for $P[Overflow] = 1e-5$')
-# plt.bar(b, size)
-# plt.xlabel('Parameter of the geometric service time')
-# plt.ylabel('Queue size')
-# plt.grid()
-# plt.tight_layout()
-# plt.savefig('queue_size_vs_b.pdf')
 
 # plt.show()
