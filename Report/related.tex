@@ -1,0 +1,19 @@
+% !TEX root = template.tex
+
+\section{Related Work}
+\label{sec:related_work}
+
+Vehicular networks have been studied for years to increase the safety in the streets, to make driving an easier task (with devices like navigators or obstacle sensors) or simply to increase the level of entertainment inside the vehicle.
+In the last few years, a lot of companies in the automotive industry tried to install communication modules in their cars to enhance the communication capability with the external environment, the technology that presented the most suitable features has been \gls{dsrc}.
+Toyota in \cite{Toyota15} presents some situation in which \gls{v2i} and \gls{v2v} communication would be desirable, their goal is mostly to increase the safety in the streets. In \cite{Cadillac17}, the company introduces \gls{v2v} communication in one of its products to share information with other equipped cars that can be used to alert drivers to upcoming potential hazards. In both these solutions, \gls{dsrc} is used as enabling technology.
+
+The next step in this field will be to exploit the potential of hybrid networking. The motivation for this approach is given by the availability of several communication modules inside the commercial vehicles. Each technology has different characteristics in terms of signal propagation, bandwidth and cost, the goal is to design a system that changes the kind of communication when needed.
+
+Ylianttila et al. \cite{Ylianttila05} propose an algorithm to switch between cellular and Wi-Fi networks. The vehicle's position is updated using GPS signal. Once the vehicle enters the coverage area of a Wi-Fi hotspot, radio signals from the access point are probed and handover towards Wi-Fi network is made only if the received signal's strenght is above a certain threshold.
+
+Wang et al. \cite{Wang16} employ a decision tree to decide when is convenient make handoff towards \gls{wave} and \gls{wimax} from third generation cellular network.
+When a vehicle enters in a new access point coverage area, it feeds the decision tree with some predetermined metrics such as network statistics, type of service required or the speed of the vehicle to compute the probability to make handoff.
+
+In \cite{Higuchi17} a novel approach to the problem is proposed, in which interface selection is controlled by a remote central server. The server provides vehicles with recommended interface selection strategies optimized based on statistical knowledge. The vehicles would normally follow server's directives, they can take some controlled decision whenever the actual channel conditions deviates from the statistics on the server.
+
+In this paper we extend the previous work making a comparison between \gls{dsrc}, \gls{mmWaves} and 4G cellular networks in a vehicular scenario, searching for the strenghtness of each technology.

@@ -1,0 +1,103 @@
+\documentclass[10pt, conference, letterpaper]{IEEEtran}
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{import}
+\usepackage{multirow}
+\usepackage{cite}
+\usepackage[export]{adjustbox}
+\usepackage{breqn}
+\usepackage{mathrsfs}
+\usepackage{acronym}
+\usepackage[acronym]{glossaries}
+\usepackage[keeplastbox]{flushend}
+\usepackage{setspace}
+\usepackage{stackengine}
+
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\thesubtable}{\alph{subtable}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\def\delequal{\mathrel{\ensurestackMath{\stackon[1pt]{=}{\scriptscriptstyle\Delta}}}}
+
+\graphicspath{{./figures/}}
+\setlength{\belowcaptionskip}{0mm}
+\setlength{\textfloatsep}{8pt}
+
+\newcommand{\eq}[1]{Eq.~\eqref{#1}}
+\newcommand{\fig}[1]{Fig.~\ref{#1}}
+\newcommand{\tab}[1]{Tab.~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+
+\newcommand\MR[1]{\textcolor{blue}{#1}}
+\newcommand\red[1]{\textcolor{red}{#1}}
+\newcommand\DP[1]{\textcolor{green}{#1}}
+
+\newacronym{dsrc}{DSRC}{Dedicated Short Range Communication}
+\newacronym{mmWaves}{mmWaves}{millimeter waves}
+\newacronym{v2i}{V2I}{Vehicle-to-Infrastructure}
+\newacronym{v2v}{V2V}{Vehicle-to-Vehicle}
+\newacronym{ue}{UE}{User Equipment}
+\newacronym{wave}{WAVE}{Wireless Access in Vehicular Environments}
+\newacronym{wimax}{WiMAX}{Worldwide Interoperability for Microwave Access}
+\newacronym{los}{LOS}{Line-Of-Sight}
+
+%\renewcommand{\baselinestretch}{0.98}
+% \renewcommand{\bottomfraction}{0.8}
+% \setlength{\abovecaptionskip}{0pt}
+\setlength{\columnsep}{0.2in}
+
+% \IEEEoverridecommandlockouts\IEEEpubid{\makebox[\columnwidth]{PUT COPYRIGHT NOTICE HERE \hfill} \hspace{\columnsep}\makebox[\columnwidth]{ }} 
+
+\title{Comparison between different technologies for vehicular communication}
+
+\author{Davide Peron$^\dag$
+\thanks{$^\dag$Università degli Studi di Padova, email: perondav@dei.unipd.it}
+} 
+
+\IEEEoverridecommandlockouts
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Millimeter Wave communication will be a key technology introduced by 5G cellular networks. Thanks to its high frequency, this kind of communication will enable networks with a datarate higher than the one offered by nowadays networks and a very low latency. Unfortunately, due to the high frequency, mmWaves suffer of an high blockage and they require antennas with an extremely narrow beam with consequent alignment problems.
+For this reason, standard cellular networks (such as LTE) will support this technology to keep a good reliability also in case of blockage at the cost of a lower datarate.
+In this work mmWaves are compared with LTE and IEEE 802.11p in order to show the pros and cons of each one with a view to the future application in which these three technologies can cohexist.
+\DP{Da rivedere}
+\end{abstract}
+
+\IEEEkeywords
+Mm-Wave, Vehicular Networks, Optimization, Beam Training, Data Transmission, Partially Observable MDP.
+\endIEEEkeywords
+
+
+\input{Intro}
+
+\input{related}
+
+\input{simulation_framework}
+
+\input{results}
+
+\input{conclusions}
+
+\bibliography{biblio}
+\bibliographystyle{ieeetr}
+
+\end{document}
+
+
