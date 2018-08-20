@@ -3,10 +3,15 @@
 \section{Concluding Remarks}
 \label{sec:conclusions}
 
-\red{This section should take max half a page.}
+In this paper, a comparison between \gls{dsrc}, LTE and \gls{mmWaves} has been made, enhanching the pros and cons of each technology.
+The conclusions that can be drawn from this work are that each technology is suitable for a set of applications depending on the environment and the datarate.
+\gls{dsrc} uses the classic IEEE 802.11 frequency band (5.9 GHz), therefore can be suitable for a dense urban environment, at the cost of a low datarate, since has been found that also data rates such as $100Mb/s$ are too high for this kind of communication.
 
-\MR{In many papers, here you find a summary of what done. It is basically an abstract where instead of using the present tense you use the past participle, as you refer to something that you have already developed in the previous sections. While I did it myself in the past, I now find it rather useless.}\\ 
+Having a lower frequency allows also a larger antenna's beam, that makes this technology deployable in a \gls{v2v} scenario.
 
-\MR{\textbf{What I would like to see here is:} 1) a very short summary of what done, 2) some (possibly) intelligent observations on the relevance and {\it applicability} of your algorithms / findings, 3) what is still missing, and can be done in the future to extend your work. The idea is that this section should be {\it useful} and not just a repetition of the abstract (just \mbox{re-phrased} and written using a different tense...).}\\
+\gls{mmWaves} can afford very high data rates without losing packets, but it suffers of an high sensitivity to blockages like buildings or even vehicles or people. For this reason is less suitable than \gls{dsrc} for a \gls{v2v} scenario, but is a great choice in a \gls{v2i} one with \gls{bs} in \gls{los}.
 
-\MR{\textbf{Moreover:} being a project report, I would also like to see a specific paragraph specifying: 1) what you have learned, and 2) any difficulties you may have encountered.}
+The last technology, LTE, is the trade off between \gls{dsrc} and \gls{mmWaves}, since it uses a low enough frequency (less than 10GHz) to be robust to blockages but it can not communicate at the data rates used by \gls{mmWaves}. For this reason is a good backup solution where \gls{mmWaves} \gls{bs} are too far or in \gls{nlos} and a reliable communication is needed.
+
+In the future, more simulations can be made to reduce the \gls{ci} and have more statistically robust results.
+The next step on this field is to choose in which context can be used a technology instead of another and how to switch from \gls{mmWaves} to LTE and \gls{dsrc} without losing connection.

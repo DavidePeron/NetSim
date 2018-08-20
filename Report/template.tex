@@ -20,9 +20,9 @@
 \usepackage{mathrsfs}
 \usepackage{acronym}
 \usepackage[acronym]{glossaries}
-\usepackage[keeplastbox]{flushend}
+% \usepackage[keeplastbox]{flushend}
 \usepackage{setspace}
-\usepackage{stackengine}
+% \usepackage{stackengine}
 
 \renewcommand{\thetable}{\arabic{table}}
 \renewcommand{\thesubtable}{\alph{subtable}}
@@ -53,6 +53,15 @@
 \newacronym{wave}{WAVE}{Wireless Access in Vehicular Environments}
 \newacronym{wimax}{WiMAX}{Worldwide Interoperability for Microwave Access}
 \newacronym{los}{LOS}{Line-Of-Sight}
+\newacronym{nlos}{NLOS}{Non-Line-Of-Sight}
+\newacronym{ber}{BER}{Bit Error Rate}
+\newacronym{snr}{SNR}{Signal-to-Noise Ratio}
+\newacronym{sinr}{SINR}{Signal-to-Interference-plus-Noise Ratio}
+\newacronym{bs}{BS}{Base Station}
+\newacronym{ci}{CI}{Confidence Intervals}
+\newacronym{gnb}{gNB}{Next Generation Node Bases}
+\newacronym{enodeb}{eNodeB}{4G LTE base stations}
+\newacronym{nr}{NR}{New Radio}
 
 %\renewcommand{\baselinestretch}{0.98}
 % \renewcommand{\bottomfraction}{0.8}
@@ -74,14 +83,14 @@
 \maketitle
 
 \begin{abstract}
-Millimeter Wave communication will be a key technology introduced by 5G cellular networks. Thanks to its high frequency, this kind of communication will enable networks with a datarate higher than the one offered by nowadays networks and a very low latency. Unfortunately, due to the high frequency, mmWaves suffer of an high blockage and they require antennas with an extremely narrow beam with consequent alignment problems.
-For this reason, standard cellular networks (such as LTE) will support this technology to keep a good reliability also in case of blockage at the cost of a lower datarate.
-In this work mmWaves are compared with LTE and IEEE 802.11p in order to show the pros and cons of each one with a view to the future application in which these three technologies can cohexist.
-\DP{Da rivedere}
+Millimeter Wave communication will be a key technology introduced by 5G cellular networks. Thanks to its high frequency, this kind of communication will enable networks with a datarate higher than the one offered by nowadays networks and a very low latency. Unfortunately, due to the high frequency, mmWaves suffer of high sensitivity to blockages and they require antennas with an extremely narrow beam with consequent difficulties in the alignment process.
+For this reason, other technologies will support mmWaves to ensure a good reliability also in case of harsh channel conditions at the cost of a lower datarate.
+
+In this work mmWaves are compared with LTE and IEEE 802.11p (DSRC) in order to show the pros and cons of each one, with a view to future applications in which these three technologies can cohexist.
 \end{abstract}
 
 \IEEEkeywords
-Mm-Wave, Vehicular Networks, Optimization, Beam Training, Data Transmission, Partially Observable MDP.
+mmWaves, Vehicular Networks, DSRC, LTE, ns3.
 \endIEEEkeywords
 
 
