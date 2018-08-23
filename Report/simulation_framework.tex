@@ -3,7 +3,7 @@
 \section{Simulation framework}
 \label{sec:simulation_framework}
 % The aim of this paper is to compare the behavior of three different communication technologies within a similar scenario. 
-To compare different communication technologies, the authors developed three independent scenarios using WAVE, LENA and mmwave module for \textit{ns-3}. The latter is not in the official release but has been developed by University of Padua toghether with New York University (NYU) as an extension of lte module to allow realistic simulations also for higher frequency applications. 
+To compare different communication technologies, the authors developed three independent scenarios using WAVE, LENA and mmwave module for \textit{ns-3}. The latter is not in the official release but has been developed by University of Padua toghether with New York University (NYU) as an extension of LENA module to allow realistic simulations also for higher frequency applications. 
 
 The simulation's scenario is slight different for \gls{dsrc} and the other two technologies. In a realistic scenario, \gls{dsrc} is used mostly in direct \gls{v2v} communication, LTE is more suitable for a \gls{v2i} communication and \gls{mmWaves} can be used both in a \gls{v2v} communication (assuming the vehicles are in line of sight and close to each other and assuming good enough environment conditions) and a \gls{v2i} one.
 Nevertheless, in this paper \gls{mmWaves} is considered only for \gls{v2i} communication.
@@ -21,10 +21,9 @@ LTE is the most used technology in the $4^{th}$ generation cellular networks, th
 
 The scenario implemented to simulate the behavior of LTE is a square area 500 meters wide in which 6 buildings and \gls{enodeb} (i.e. the LTE base stations in 3GPP \gls{nr} terminology) are randomly positioned.
 The number of \gls{enodeb}s positioned in the area increases from 3 to 40. This high density of base stations is irrealistic for LTE, since each \gls{enodeb} can give a coverage up to several km, but is used anyway to have data comparable with \gls{mmWaves}' simulations.
-User moves from (100, 490) along x axis with a velocity of $30m/s$ for 10 seconds. During the simulation, it receives 1400 bytes packets from the closest eNodeB at a rate of $1.12 Gb/s$.
-An example of a simulated scenario is shown in \fig{fig:scenario}.
+User moves from (100, 490) as shown in \fig{fig:scenario}, with a velocity of $30m/s$ for 10 seconds. During the simulation, it receives 1400 bytes packets from the closest eNodeB at a rate of $1.12 Gb/s$ and $50Mb/s$.
 
-Handovers are made from an eNodeB to another if needed to receives in each moment the best signal possible. \textit{LENA} module of ns-3 has been used for the simulation.
+Handovers are made from an eNodeB to another, if needed, in order to receive the best signal in each moment. \textit{LENA} module of ns-3 has been used for the simulation.
 
 \begin{figure}[ht]
 \vspace{-0.2in}

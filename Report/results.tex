@@ -72,19 +72,19 @@ The metrics here presented are mean throughput, mean latency, \gls{ber} and \gls
   \label{fig:mmWaves-BER}
 \end{figure}
 
-In all the plots, the confidence intervals are not plotted since they are really big due to the fact that more simulations are needed to reduce the variance on data. Unfortunately, given the high density of base stations, the simulation time is long and does not allow a large amount of runs.
+In all the plots, the confidence intervals are missing since more simulations are needed to reduce the variance on data and have statistically robust results. Unfortunately, given the high density of base stations, the simulation time is long and does not allow a large amount of runs.
 
 Even with a reduced number of simulations, can be seen as using \gls{mmWaves}, the throughput is increasing with the number of \gls{gnb}s per $km^2$, while the latency and the \gls{ber} have the opposite behavior.
-LTE latency is increasing with the number of \gls{bs} for any datarate used, this is probably due to the high interference suffered by this technology in presence of such an high number of \gls{bs} in a small area.
-Looking at the throughput plot, can be seen as with a large amount of \gls{bs}, LTE's throughput decreases. This is due to the interference between the \gls{bs}. This does not happen using mmWaves since the transmission is directional and the interference is negligible.
+LTE latency is increasing with the number of \gls{bs} for any datarate used, this is probably due to some imprecision in the code or in the simulator and can be solved in a future work.
+It should be noted that latency is computed only on the corrected received packets, so does not take into account the period in which the \gls{ue} is in outage.
 
 In presence of few base stations (in this case 3 base stations is the minimum density simulated), the \gls{ue} can be often in \gls{nlos} because of the distance from the closest base station or the presence of buildings between the \gls{ue} and the \gls{bs}. In these case, mmWave suffers of an high blockage phenomena and, in most cases, it is unable to enstablish a connection in \gls{nlos}, while LTE can still communicate given its lower frequency. As the density increases, \gls{ue} can be often make handover towards a \gls{bs} that ensures a more reliable communication, with a consequent decrease of the mean \gls{ber}.
 
-Looking at the \gls{ber} plot, LTE has high values using 1Gb/s as application datarate, while is lower and decreasing for lower datarates. This shows how LTE can not afford such an high datarate.
+Looking at the \gls{ber} plot, LTE has high values using 1Gb/s as application datarate, while is lower and it has a decreasing trend for lower datarates. This shows how LTE can not afford such an high datarate.
 
-In the following, an example of a single run for LTE and mmWaves is showed. A user is moving in the same scenario used before with 3 \gls{bs} and 6 buildings.
+In the following, an example of a single run for LTE and mmWaves is showed. The user is moving in the same scenario used before with 3 \gls{bs} and 6 buildings.
 \fig{fig:mmWaves-throughput-single} and \fig{fig:mmWaves-latency-single} show a mmWave run in which for the first 2.5 seconds the \gls{ue} is in \gls{nlos}, from 2.5 to 4.5 seconds \gls{ue} is in \gls{los} and receives all the packets while for the remaining time it is in outage and no packets are received.
-In the LTE run, \fig{fig:lte-throughput-single} and \fig{fig:lte-latency-single} show that the throughput and the latency are almost constant despite the buildings, since LTE uses a lower frequency. They have an abnormal behavior after 4 seconds since the \gls{ue} is moving and it goes in \gls{nlos}. From 5 to 10 seconds no measures are taken, since the \gls{ue} is in outage.
+In the LTE run, \fig{fig:lte-throughput-single} and \fig{fig:lte-latency-single} show that throughput and latency are almost constant despite the buildings, since LTE uses a lower frequency. They have an abnormal behavior after 4 seconds since the \gls{ue} is moving and it goes in \gls{nlos}. From 5 to 10 seconds the \gls{ue} is in outage and no measures are taken.
 
 \begin{figure}[ht]
   \includegraphics[width=\linewidth]{throughput_mmWaves_UDP}
